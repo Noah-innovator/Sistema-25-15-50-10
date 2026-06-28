@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>El Sistema 25-15-50-10</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+
+  :root{
+    --bg:#0a0a0f;
+    --surface:#13131a;
+    --surface-2:#1b1b24;
+    --border:#26262f;
+    --indigo:#6366f1;
+    --violeta:#a855f7;
+    --texto:#f5f5f7;
+    --texto-2:#9a9aa5;
+    --texto-3:#5e5e68;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    font-family:'Inter',sans-serif;
+    background:var(--bg);
+    color:var(--texto);
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  img{max-width:100%; display:block;}
+  .wrap{ max-width:480px; margin:0 auto; position:relative; }
+
+  /* ---------------- BARRA SIGNATURE 25-15-50-10 ---------------- */
+  .barra-top{
+    position:sticky;
+    top:0;
+    z-index:50;
+    height:3px;
+    width:100%;
+    display:flex;
+    background:var(--surface);
+  }
+  .barra-top .seg{ height:100%; opacity:.9; }
+  .seg-25{ width:25%; background:var(--indigo); }
+  .seg-15{ width:15%; background:#818cf8; }
+  .seg-50{ width:50%; background:var(--violeta); }
+  .seg-10{ width:10%; background:#d8b4fe; }
+
+  /* ---------------- BG GLOW AMBIENTAL ---------------- */
+  .glow-bg{
+    position:absolute;
+    top:-120px; left:50%;
+    transform:translateX(-50%);
+    width:600px; height:600px;
+    background:radial-gradient(circle, rgba(99,102,241,.25) 0%, rgba(168,85,247,.08) 45%, transparent 70%);
+    filter:blur(20px);
+    pointer-events:none;
+    z-index:0;
+  }
+
+  /* ---------------- HERO ---------------- */
+  .hero{
+    position:relative;
+    padding:52px 26px 0;
+    z-index:1;
+  }
+  .badge{
+    display:inline-flex;
+    align-items:center;
+    gap:7px;
+    background:var(--surface);
+    border:1px solid var(--border);
+    border-radius:100px;
+    padding:7px 14px;
+    font-size:12px;
+    font-weight:600;
+    color:var(--texto-2);
+    margin:0 auto 22px;
+  }
+  .badge-row{ display:flex; justify-content:center; }
+  .badge .dot{ width:6px; height:6px; border-radius:50%; background:linear-gradient(135deg, var(--indigo), var(--violeta)); }
+
+  .hero-title{
+    font-size:34px;
+    font-weight:800;
+    letter-spacing:-.025em;
+    line-height:1.15;
+    text-align:center;
+    color:var(--texto);
+  }
+  .hero-title .grad{
+    background:linear-gradient(120deg, var(--indigo), var(--violeta));
+    -webkit-background-clip:text;
+    background-clip:text;
+    color:transparent;
+  }
+  .hero-sub{
+    text-align:center;
+    font-size:16px;
+    line-height:1.55;
+    color:var(--texto-2);
+    margin:16px auto 0;
+    max-width:360px;
+    font-weight:400;
+  }
+
+  .libro-stage{
+    position:relative;
+    margin:40px auto 0;
+    display:flex;
+    justify-content:center;
+  }
+  .libro-stage img{
+    width:58%;
+    max-width:260px;
+    filter:drop-shadow(0 25px 50px rgba(99,102,241,.25)) drop-shadow(0 10px 20px rgba(0,0,0,.5));
+    animation:flotar 6s ease-in-out infinite;
+  }
+  @keyframes flotar{
+    0%,100%{ transform:translateY(0px) rotate(0deg); }
+    50%{ transform:translateY(-12px) rotate(.4deg); }
+  }
+
+  .hero-cta-zone{
+    padding:36px 0 40px;
+    text-align:center;
+  }
+  .precio-row{
+    display:flex;
+    align-items:baseline;
+    justify-content:center;
+    gap:10px;
+    margin-bottom:18px;
+  }
+  .precio-tachado{
+    font-size:16px;
+    color:var(--texto-3);
+    text-decoration:line-through;
+  }
+  .precio-actual{
+    font-size:36px;
+    font-weight:800;
+    letter-spacing:-.02em;
+    color:var(--texto);
+  }
+  .precio-actual span{ font-size:16px; font-weight:600; color:var(--texto-2); }
+
+  .btn-cta{
+    display:block;
+    background:linear-gradient(120deg, var(--indigo), var(--violeta));
+    color:#fff;
+    font-weight:700;
+    font-size:16px;
+    text-align:center;
+    padding:17px 20px;
+    border-radius:14px;
+    text-decoration:none;
+    box-shadow:0 12px 30px -8px rgba(99,102,241,.55);
+    transition:transform .15s ease, box-shadow .15s ease;
+  }
+  .btn-cta:active{ transform:scale(.97); }
+  .cta-nota{
+    font-size:12.5px;
+    color:var(--texto-3);
+    margin-top:14px;
+  }
+
+  /* ---------------- SECCIONES ---------------- */
+  .seccion{ padding:64px 26px; position:relative; z-index:1; }
+  .divider{
+    height:1px;
+    background:linear-gradient(90deg, transparent, var(--border), transparent);
+    margin:0 26px;
+  }
+
+  .eyebrow{
+    font-size:12px;
+    font-weight:700;
+    letter-spacing:.08em;
+    text-transform:uppercase;
+    color:var(--indigo);
+    text-align:center;
+    margin-bottom:14px;
+  }
+  .h2{
+    font-size:25px;
+    font-weight:800;
+    letter-spacing:-.02em;
+    text-align:center;
+    line-height:1.3;
+    color:var(--texto);
+  }
+  .sub-centro{
+    text-align:center;
+    font-size:15px;
+    color:var(--texto-2);
+    max-width:340px;
+    margin:14px auto 0;
+    line-height:1.6;
+  }
+
+  /* ---------------- DOLOR ---------------- */
+  .dolor-lista{ display:flex; flex-direction:column; gap:10px; margin-top:34px; }
+  .dolor-item{
+    display:flex;
+    gap:14px;
+    align-items:center;
+    background:var(--surface);
+    border:1px solid var(--border);
+    border-radius:16px;
+    padding:18px 18px;
+  }
+  .dolor-num{
+    flex-shrink:0;
+    width:30px; height:30px;
+    border-radius:9px;
+    background:var(--surface-2);
+    display:flex; align-items:center; justify-content:center;
+    font-size:13px;
+    font-weight:700;
+    color:var(--texto-2);
+  }
+  .dolor-texto{ font-size:14.5px; line-height:1.5; color:var(--texto-2); }
+  .dolor-texto b{ color:var(--texto); font-weight:600; }
+
+  /* ---------------- LOS 4 BLOQUES ---------------- */
+  .bloques-grid{
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+    margin-top:34px;
+  }
+  .bloque-card{
+    background:var(--surface);
+    border-radius:16px;
+    padding:20px 20px;
+    display:flex;
+    align-items:center;
+    gap:18px;
+    border:1px solid var(--border);
+    position:relative;
+    overflow:hidden;
+  }
+  .bloque-card::before{
+    content:"";
+    position:absolute;
+    left:0; top:0; bottom:0;
+    width:3px;
+    background:var(--c);
+  }
+  .bloque-pct{
+    font-size:24px;
+    font-weight:800;
+    letter-spacing:-.02em;
+    color:var(--c);
+    min-width:50px;
+  }
+  .bloque-info .nombre{ font-size:15px; font-weight:700; color:var(--texto); }
+  .bloque-info .desc{ font-size:13px; color:var(--texto-2); margin-top:3px; line-height:1.45; }
+  .b1{ --c:#6366f1; }
+  .b2{ --c:#818cf8; }
+  .b3{ --c:#a855f7; }
+  .b4{ --c:#d8b4fe; }
+
+  /* ---------------- INCLUYE ---------------- */
+  .incluye-lista{ display:flex; flex-direction:column; gap:2px; margin-top:34px; }
+  .incluye-item{
+    display:flex;
+    gap:16px;
+    align-items:flex-start;
+    padding:20px 0;
+    border-bottom:1px solid var(--border);
+  }
+  .incluye-item:last-child{ border-bottom:none; }
+  .incluye-num{
+    flex-shrink:0;
+    width:32px; height:32px;
+    border-radius:10px;
+    background:var(--surface);
+    border:1px solid var(--border);
+    color:var(--indigo);
+    font-weight:700;
+    font-size:14px;
+    display:flex; align-items:center; justify-content:center;
+  }
+  .incluye-titulo{ font-size:15.5px; font-weight:700; color:var(--texto); margin-bottom:4px; }
+  .incluye-desc{ font-size:13.5px; color:var(--texto-2); line-height:1.5; }
+
+  /* ---------------- PARA QUIEN ---------------- */
+  .es-noes{ display:flex; flex-direction:column; gap:10px; margin-top:34px; }
+  .es-noes-card{
+    border-radius:16px;
+    padding:18px 20px;
+    font-size:14px;
+    line-height:1.55;
+    border:1px solid var(--border);
+    background:var(--surface);
+  }
+  .es-noes-card b{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    margin-bottom:8px;
+    font-size:13px;
+    font-weight:700;
+  }
+  .es-si b{ color:#818cf8; }
+  .es-no b{ color:var(--texto-3); }
+  .es-noes-card.es-no{ color:var(--texto-2); }
+
+  /* ---------------- CTA FINAL ---------------- */
+  .cta-final{
+    background:var(--surface);
+    border:1px solid var(--border);
+    border-radius:24px;
+    padding:38px 24px;
+    text-align:center;
+    position:relative;
+    overflow:hidden;
+  }
+  .cta-final::before{
+    content:"";
+    position:absolute;
+    top:-50%; left:-20%;
+    width:140%; height:140%;
+    background:radial-gradient(circle at 30% 20%, rgba(99,102,241,.18), transparent 60%);
+    pointer-events:none;
+  }
+  .cta-final-content{ position:relative; z-index:1; }
+
+  .garantia{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    background:var(--surface-2);
+    border-radius:14px;
+    padding:16px 18px;
+    margin-top:22px;
+    text-align:left;
+  }
+  .garantia-ico{
+    flex-shrink:0;
+    width:34px; height:34px;
+    border-radius:10px;
+    background:rgba(99,102,241,.15);
+    display:flex; align-items:center; justify-content:center;
+    font-size:16px;
+  }
+  .garantia-txt{ font-size:12.5px; color:var(--texto-2); line-height:1.5; }
+  .garantia-txt b{ display:block; font-size:13.5px; color:var(--texto); margin-bottom:2px; }
+
+  .footer-nota{
+    text-align:center;
+    font-size:12px;
+    color:var(--texto-3);
+    padding:30px 26px 40px;
+    line-height:1.7;
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="barra-top">
+    <div class="seg seg-25"></div><div class="seg seg-15"></div><div class="seg seg-50"></div><div class="seg seg-10"></div>
+  </div>
+
+  <div class="glow-bg"></div>
+
+  <!-- ============ HERO ============ -->
+  <section class="hero">
+    <div class="badge-row">
+      <div class="badge"><span class="dot"></span>El sistema 25 · 15 · 50 · 10</div>
+    </div>
+
+    <h1 class="hero-title">Gestiona tu dinero<br><span class="grad">sin importar</span><br>cuánto ganes</h1>
+    <p class="hero-sub">La guía práctica para dejar de vivir de cheque a cheque, sin necesitar un sueldo más alto.</p>
+
+    <div class="libro-stage">
+      <img src="ebook.png" alt="Ebook El Sistema 25-15-50-10">
+    </div>
+
+    <div class="hero-cta-zone">
+      <div class="precio-row">
+        <span class="precio-tachado">$17</span>
+        <span class="precio-actual">$9<span>.90 USD</span></span>
+      </div>
+      <a href="https://pay.hotmart.com/N106494098C?bid=1782433181728" class="btn-cta">Quiero mi ebook ahora →</a>
+      <div class="cta-nota">Pago seguro vía Hotmart · Acceso inmediato</div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ============ DOLOR ============ -->
+  <section class="seccion">
+    <div class="eyebrow">¿Te suena familiar?</div>
+    <h2 class="h2">No es cuánto ganas.<br>Es a dónde se va.</h2>
+    <p class="sub-centro">El dinero entra, las cuentas se pagan, y a fin de mes no sabes en qué se fue el resto.</p>
+
+    <div class="dolor-lista">
+      <div class="dolor-item">
+        <div class="dolor-num">01</div>
+        <div class="dolor-texto">Cobras tu sueldo y en <b>menos de dos semanas</b> ya no queda casi nada.</div>
+      </div>
+      <div class="dolor-item">
+        <div class="dolor-num">02</div>
+        <div class="dolor-texto">No tienes un <b>fondo de emergencia</b>, así que cualquier imprevisto te desestabiliza.</div>
+      </div>
+      <div class="dolor-item">
+        <div class="dolor-num">03</div>
+        <div class="dolor-texto">Sientes que entre <b>más ganas, más gastas</b> — y nunca avanzas de verdad.</div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ============ EL SISTEMA ============ -->
+  <section class="seccion">
+    <div class="eyebrow">La solución</div>
+    <h2 class="h2">4 bloques.<br>Un solo sistema.</h2>
+    <p class="sub-centro">Cada peso que ganas tiene un lugar fijo a dónde ir, automáticamente.</p>
+
+    <div class="bloques-grid">
+      <div class="bloque-card b1">
+        <div class="bloque-pct">25%</div>
+        <div class="bloque-info">
+          <div class="nombre">Crecimiento</div>
+          <div class="desc">Inversiones y activos que trabajan para ti</div>
+        </div>
+      </div>
+      <div class="bloque-card b2">
+        <div class="bloque-pct">15%</div>
+        <div class="bloque-info">
+          <div class="nombre">Estabilidad</div>
+          <div class="desc">Tu fondo de emergencia, blindado</div>
+        </div>
+      </div>
+      <div class="bloque-card b3">
+        <div class="bloque-pct">50%</div>
+        <div class="bloque-info">
+          <div class="nombre">Esenciales</div>
+          <div class="desc">Vivienda, comida y transporte, sin culpa</div>
+        </div>
+      </div>
+      <div class="bloque-card b4">
+        <div class="bloque-pct">10%</div>
+        <div class="bloque-info">
+          <div class="nombre">Recompensas</div>
+          <div class="desc">Para disfrutar, sin descarrilar el plan</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ============ QUE INCLUYE ============ -->
+  <section class="seccion">
+    <div class="eyebrow">Tu compra incluye</div>
+    <h2 class="h2">Más que un libro.<br>Un sistema completo.</h2>
+
+    <div class="incluye-lista">
+      <div class="incluye-item">
+        <div class="incluye-num">01</div>
+        <div>
+          <div class="incluye-titulo">El ebook completo</div>
+          <div class="incluye-desc">Toda la teoría explicada con ejemplos reales, en PDF, para leer a tu ritmo.</div>
+        </div>
+      </div>
+      <div class="incluye-item">
+        <div class="incluye-num">02</div>
+        <div>
+          <div class="incluye-titulo">Plantilla de cálculo</div>
+          <div class="incluye-desc">Excel o Google Sheets listo para meter tus números reales y dar seguimiento mes a mes.</div>
+        </div>
+      </div>
+      <div class="incluye-item">
+        <div class="incluye-num">03</div>
+        <div>
+          <div class="incluye-titulo">Calculadora web interactiva</div>
+          <div class="incluye-desc">Ábrela desde tu celular y calcula tu plan en segundos, sin instalar nada.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ============ PARA QUIEN ============ -->
+  <section class="seccion" style="padding-bottom:0;">
+    <div class="es-noes">
+      <div class="es-noes-card es-si">
+        <b>✓ Es para ti si...</b>
+        Quieres un plan simple y concreto, sin importar si ganas poco o mucho hoy.
+      </div>
+      <div class="es-noes-card es-no">
+        <b>— No es para ti si...</b>
+        Buscas una fórmula mágica para hacerte rico de la noche a la mañana.
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ CTA FINAL ============ -->
+  <section class="seccion">
+    <div class="cta-final">
+      <div class="cta-final-content">
+        <div class="eyebrow">Empieza hoy</div>
+        <h2 class="h2">Tu plan financiero,<br>en menos de 10 minutos</h2>
+        <div class="precio-row" style="margin-top:22px;">
+          <span class="precio-tachado">$17</span>
+          <span class="precio-actual">$9<span>.90 USD</span></span>
+        </div>
+        <a href="https://pay.hotmart.com/N106494098C?bid=1782433181728" class="btn-cta">Quiero mi ebook ahora →</a>
+
+        <div class="garantia">
+          <div class="garantia-ico">🛡️</div>
+          <div class="garantia-txt">
+            <b>Compra 100% segura</b>
+            Procesado por Hotmart, con garantía de devolución.
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="footer-nota">
+    El Sistema 25-15-50-10 · Malek Net<br>
+    Este producto no constituye asesoría financiera personalizada.
+  </div>
+
+</div>
+</body>
+</html>
